@@ -1,0 +1,70 @@
+// Change this line to make the function async
+document.getElementById('btnSendOtp').addEventListener('click', async () => {
+    // ... (Keep your existing validation and captcha logic) ...
+
+    // 5. Generate OTP and move to Step 2
+    generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+    verifiedMobileNumber = mobile; 
+
+    // REMOVE THIS ALERT:
+    // alert(`SIMULATION: Your Login OTP for Harishchandrapur-I Dev. Block is ${generatedOTP}`);
+
+    // ADD THIS FETCH REQUEST:
+    try {
+        const response = await fetch('http://localhost:3000/send-otp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ mobile: verifiedMobileNumber, otp: generatedOTP })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            msgBox.style.display = "none"; 
+            step1.classList.add('hidden');
+            step2.classList.remove('hidden');
+            stepIndicator.innerText = "Step 2: Enter OTP to Login";
+            showMessage("OTP sent successfully to your mobile!", false);
+        } else {
+            showMessage("Failed to send OTP. Please try again.");
+        }
+    } catch (error) {
+        showMessage("Server connection failed. Is the backend running?");
+    }
+});
+
+const express = require('express');
+const cors = require('cors');
+const twilio = require('twilio'); // Replace with your chosen SMS provider's SDK
+
+const app = express();
+app.use(cors()); // Allows your local HTML file to talk to this server
+app.use(express.json());
+
+// Your SMS Provider Credentials (keep these secret, use environment variables in production)
+const accountSid = 'YOUR_TWILIO_ACCOUNT_SID';
+const authToken = 'YOUR_TWILIO_AUTH_TOKEN';
+const twilioPhone = 'YOUR_TWILIO_PHONE_NUMBER';
+const client = twilio(accountSid, authToken);
+
+app.post('/send-otp', async (req, res) => {
+    const { mobile, otp } = req.body;
+
+    try {
+        // Trigger the real SMS
+        await client.messages.create({
+            body: `Your Login OTP for Harishchandrapur-I Dev. Block is: ${otp}. Do not share this with anyone.`,
+            from: twilioPhone,
+            to: `+91${mobile}` // Assuming Indian mobile numbers (+91)
+        });
+
+        res.json({ success: true, message: "SMS dispatched successfully" });
+    } catch (error) {
+        console.error("SMS Error:", error);
+        res.status(500).json({ success: false, message: "Failed to send SMS" });
+    }
+});
+
+app.listen(3000, () => {
+    console.log('Backend server running on http://localhost:3000');
+});

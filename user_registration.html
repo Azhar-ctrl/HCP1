@@ -1,264 +1,276 @@
-
-            <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login via OTP - Harishchandrapur-I Dev. Block</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* --- General Reset & Body Styling --- */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Arial', sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New User Registration</title>
+  <!-- Font Awesome for Form Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-        body {
-            /* Changed to light pink gradient */
-            background: #fffaf5; /* Very subtle light orange/off-white background */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+    body {
+      background-color: #f4f6f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
 
-        /* --- Main Login Container --- */
-        .login-container {
-            background-color: #ffffff;
-            width: 100%;
-            max-width: 450px;
-            padding: 40px 50px;
-            border-radius: 8px;
-            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
-            text-align: center;
-        }
+    .card {
+      background: #ffffff;
+      padding: 40px 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+    }
 
-        .emblem {
-            width: 50px;
-            margin-bottom: 5px;
-        }
+    .card h2 {
+      color: #d9531e;
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
 
-        h1 {
-            color: #d65108;
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
+    .card p.subtitle {
+      color: #6c757d;
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
 
-        .subtitle {
-            color: #6c757d;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
+    .input-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 18px;
+      border: 1px solid #cccccc;
+      border-radius: 4px;
+      overflow: hidden;
+      background: #fff;
+    }
 
-        .step-indicator {
-            font-size: 13px;
-            color: #158348;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
+    .input-group .icon {
+      background-color: #d9531e;
+      color: #ffffff;
+      width: 50px;
+      height: 42px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
 
-        /* --- Input Fields Styling --- */
-        .input-group {
-            display: flex;
-            align-items: center;
-            border: 1px solid #ced4da;
-            border-radius: 4px;
-            margin-bottom: 15px;
-            overflow: hidden;
-        }
+    .input-group input {
+      width: 100%;
+      height: 42px;
+      border: none;
+      padding: 0 12px;
+      font-size: 14px;
+      outline: none;
+      color: #333;
+    }
 
-        .icon-box {
-            background-color: #d65108;
-            color: #ffffff;
-            padding: 14px 18px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-width: 50px;
-        }
+    .input-group input::placeholder {
+      color: #888888;
+    }
 
-        .input-group input {
-            border: none;
-            padding: 14px 15px;
-            width: 100%;
-            font-size: 14px;
-            outline: none;
-            color: #495057;
-        }
+    .btn-register {
+      width: 100%;
+      height: 42px;
+      background-color: #e6e6e6;
+      color: #a6a6a6;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 5px;
+      margin-bottom: 20px;
+      transition: background-color 0.3s, color 0.3s;
+    }
 
-        .input-group input:disabled {
-            background-color: #e9ecef;
-            cursor: not-allowed;
-        }
+    /* Active button styling when fields are valid */
+    .btn-register.active {
+      background-color: #d9531e;
+      color: #ffffff;
+    }
 
-        /* --- Captcha Box Styling --- */
-        .captcha-box {
-            background-color: #f7f4fc;
-            border: 1px solid #e0d8f0;
-            border-radius: 4px;
-            padding: 12px 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 15px;
-            position: relative;
-        }
+    .login-link {
+      font-size: 15px;
+      color: #333333;
+    }
 
-        .captcha-text {
-            color: #5c41cc;
-            font-weight: bold;
-            font-size: 16px;
-        }
+    .login-link a {
+      color: #6f42c1;
+      text-decoration: underline;
+      font-weight: 500;
+    }
 
-        .captcha-box .fa-sync-alt {
-            position: absolute;
-            right: 15px;
-            color: #158348;
-            font-size: 18px;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-
-        /* --- Buttons Styling --- */
-        .btn-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-
-        .btn {
-            border: none;
-            padding: 12px 20px;
-            border-radius: 4px;
-            color: white;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            width: 100%;
-        }
-
-        
-
-        .footer-link a {
-            color: #d65108;
-            text-decoration: underline;
-            font-weight: bold;
-        }
-
-        .error-msg {
-            color: red;
-            font-size: 13px;
-            margin-bottom: 15px;
-            display: none;
-        }
-
-        .success-msg {
-            color: #158348;
-            font-size: 13px;
-            margin-bottom: 15px;
-            display: none;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-    </style>
+    .status-msg {
+      margin-top: 15px;
+      font-size: 13px;
+    }
+  </style>
 </head>
-            
 <body>
 
-    <div class="login-container">
-        <h1>New User Registration</h1>
-        <p class="subtitle">Harishchandrapur-I Dev. Block</p>
+  <div class="card">
+    <h2>New User Registration</h2>
+    <p class="subtitle">Harishchandrapur-I Dev. Block</p>
 
-        <p id="error-message" class="error-msg">Pins do not match!</p>
+    <form id="registrationForm">
+      <!-- Full Name -->
+      <div class="input-group">
+        <div class="icon"><i class="fa-solid fa-user"></i></div>
+        <input type="text" id="fullName" placeholder="Enter Full Name" required>
+      </div>
 
-        <form id="registrationForm">
-            <!-- Full Name Input -->
-            <div class="input-group">
-                <div class="icon-box">
-                    <i class="fas fa-user"></i>
-                </div>
-                <input type="text" id="fullName" placeholder="Enter Full Name" required>
-            </div>
+      <!-- Mobile Number -->
+      <div class="input-group">
+        <div class="icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+        <input type="tel" id="mobile" placeholder="Enter 10-digit Mobile Number" pattern="[0-9]{10}" maxlength="10" required>
+      </div>
 
-            <!-- Mobile Number Input -->
-            <div class="input-group">
-                <div class="icon-box">
-                    <i class="fas fa-mobile-alt"></i>
-                </div>
-                <input type="tel" id="mobileNumber" pattern="[0-9]{10}" placeholder="Enter 10-digit Mobile Number" required>
-            </div>
+      <!-- Secret Pin -->
+      <div class="input-group">
+        <div class="icon"><i class="fa-solid fa-key"></i></div>
+        <input type="password" id="pin" placeholder="Create Secret Pin" required>
+      </div>
 
-            <!-- Secret Pin Input -->
-            <div class="input-group">
-                <div class="icon-box">
-                    <i class="fas fa-key"></i>
-                </div>
-                <input type="password" id="secretPin" placeholder="Create Secret Pin" required>
-            </div>
+      <!-- Confirm Pin -->
+      <div class="input-group">
+        <div class="icon"><i class="fa-solid fa-lock"></i></div>
+        <input type="password" id="confirmPin" placeholder="Confirm Secret Pin" required>
+      </div>
 
-            <!-- Confirm Secret Pin Input -->
-            <div class="input-group">
-                <div class="icon-box">
-                    <i class="fas fa-lock"></i>
-                </div>
-                <input type="password" id="confirmPin" placeholder="Confirm Secret Pin" required>
-            </div>
+      <!-- Register Button -->
+      <button type="submit" id="registerBtn" class="btn-register">Register</button>
+    </form>
 
-            <!-- Action Buttons -->
-            <div class="btn-container">
-                <button type="submit" class="btn btn-register">Register</button>
-            </div>
-        </form>
-
-        <!-- Footer Link -->
-        <p class="login-link">Already Registered? <a href="login.html">Login Here</a></p>
+    <div class="login-link">
+      Already Registered? <a href="#">Login Here</a>
     </div>
 
-    <script>
-        document.getElementById('registrationForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent page reload
+    <p id="statusMsg" class="status-msg"></p>
+  </div>
 
-            // Get form values
-            const fullName = document.getElementById('fullName').value;
-            const mobileNumber = document.getElementById('mobileNumber').value;
-            const secretPin = document.getElementById('secretPin').value;
-            const confirmPin = document.getElementById('confirmPin').value;
-            const errorMessage = document.getElementById('error-message');
+  <script>
+    // GitHub API Configuration
+    const GITHUB_USERNAME = 'YOUR_GITHUB_USERNAME';
+    const REPO_NAME = 'YOUR_REPOSITORY_NAME';
+    const FILE_PATH = 'data.json'; // Path inside your repository
+    const TOKEN = 'YOUR_PERSONAL_ACCESS_TOKEN'; // Replace with your token
 
-            // Basic Validation
-            if (secretPin !== confirmPin) {
-                errorMessage.innerText = "Secret PINs do not match!";
-                errorMessage.style.display = "block";
-                return;
-            }
+    const form = document.getElementById('registrationForm');
+    const registerBtn = document.getElementById('registerBtn');
+    const statusMsg = document.getElementById('statusMsg');
 
-            // Check if user already exists
-            if (localStorage.getItem(mobileNumber)) {
-                errorMessage.innerText = "This Mobile Number is already registered.";
-                errorMessage.style.display = "block";
-                return;
-            }
+    // Simple script to toggle register button state when inputs are typed
+    form.addEventListener('input', () => {
+      const inputs = form.querySelectorAll('input');
+      let allFilled = true;
+      inputs.forEach(input => {
+        if (!input.value.trim()) allFilled = false;
+      });
 
-            // Store data in LocalStorage (Simulating a database)
-            const userData = {
-                name: fullName,
-                pin: secretPin
-            };
-            
-            localStorage.setItem(mobileNumber, JSON.stringify(userData));
+      if (allFilled) {
+        registerBtn.classList.add('active');
+      } else {
+        registerBtn.classList.remove('active');
+      }
+    });
 
-            // Success feedback
-            alert("Registration Successful! Please login.");
-            window.location.href = "login.html"; // Redirect to login page
-        });
-    </script>
+    // Form Submission Handler
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const fullName = document.getElementById('fullName').value.trim();
+      const mobile = document.getElementById('mobile').value.trim();
+      const pin = document.getElementById('pin').value;
+      const confirmPin = document.getElementById('confirmPin').value;
+
+      if (pin !== confirmPin) {
+        statusMsg.style.color = 'red';
+        statusMsg.textContent = 'Secret Pins do not match!';
+        return;
+      }
+
+      statusMsg.style.color = '#333';
+      statusMsg.textContent = 'Saving data to GitHub...';
+
+      const newUser = {
+        fullName,
+        mobile,
+        pin, // In production, never save plain text passwords/PINs
+        createdAt: new Date().toISOString()
+      };
+
+      try {
+        await saveToGitHub(newUser);
+        statusMsg.style.color = 'green';
+        statusMsg.textContent = 'User registered successfully!';
+        form.reset();
+        registerBtn.classList.remove('active');
+      } catch (err) {
+        console.error(err);
+        statusMsg.style.color = 'red';
+        statusMsg.textContent = 'Error saving data to GitHub: ' + err.message;
+      }
+    });
+
+    // Function to fetch existing data, append new user, and commit back to GitHub
+    async function saveToGitHub(userData) {
+      const url = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${FILE_PATH}`;
+
+      // 1. Fetch current file content and SHA
+      const getResponse = await fetch(url, {
+        headers: {
+          'Authorization': `token ${TOKEN}`,
+          'Accept': 'application/vnd.github.v3+json'
+        }
+      });
+
+      if (!getResponse.ok) {
+        throw new Error('Failed to fetch file from GitHub.');
+      }
+
+      const fileData = await getResponse.json();
+      
+      // Decode content from Base64
+      const existingContent = JSON.parse(atob(fileData.content));
+
+      // Append new record
+      existingContent.push(userData);
+
+      // Encode back to Base64
+      const updatedContentBase64 = btoa(JSON.stringify(existingContent, null, 2));
+
+      // 2. Commit updated file to GitHub
+      const putResponse = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `token ${TOKEN}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/vnd.github.v3+json'
+        },
+        body: JSON.stringify({
+          message: `Add user ${userData.fullName}`,
+          content: updatedContentBase64,
+          sha: fileData.sha // Required by GitHub API to update an existing file
+        })
+      });
+
+      if (!putResponse.ok) {
+        throw new Error('Failed to write data to GitHub.');
+      }
+    }
+  </script>
 </body>
 </html>
